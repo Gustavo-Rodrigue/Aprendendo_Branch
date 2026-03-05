@@ -6,9 +6,44 @@
     <title>Data Dashboard - Ciência de Dados</title>
     <style>
         /* CSS BASE - ESTE É O BLOCO QUE ELES VÃO ALTERAR NA BRANCH */
+        :root {
+        font-size: 62.5%;
+
+        --body-color: #ededed;
+        --bg-color: #ffffff;
+        --second-color: #e9ecef;
+        --text-color: #000000;
+        --secondtx-color: #212121;
+
+        --highlight-color: rgba(0, 0, 0, 0.25);
+        --switch-bg-url: url("./img/sun.svg");
+
+        --button-text-color-hover: #000000;
+        --stroke-color: rgba(0, 0, 0, 0.5);
+        --surface-color: rgba(0, 0, 0, 0.1);
+        --surface-color-hover: rgba(3, 0, 0, 0.308);
+        }
+
+        .dark {
+
+        --body-color: #262626;
+        --bg-color: #000000;
+        --second-color: #303031;
+        --text-color: #ffffff;
+        --secondtx-color: #b8b8b8;
+
+        --highlight-color: rgba(255, 255, 255, 0.2);
+        --switch-bg-url: url("./img/moon-star.svg");
+        
+        --button-text-color-hover: #ffffff;
+        --stroke-color: rgba(255, 255, 255, 0.5);
+        --surface-color: rgba(255, 255, 255, 0.1);
+        --surface-color-hover: rgba(3, 0, 0, 0.308);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5; /* Cor para alterar no modo noturno */
+            background-color: var(--body-color); /* Cor para alterar no modo noturno */
             color: #333;               /* Cor para alterar no modo noturno */
             margin: 0;
             display: flex;
@@ -18,7 +53,7 @@
         }
 
         .dashboard-container {
-            background-color: white; /* Cor para alterar no modo noturno */
+            background-color: var(--bg-color); /* Cor para alterar no modo noturno */
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -39,7 +74,7 @@
         }
 
         .card {
-            background: #e9ecef;
+            background: var(--second-color);
             padding: 15px;
             border-radius: 8px;
         }
@@ -48,15 +83,71 @@
             font-size: 24px;
             font-weight: bold;
             display: block;
+            color: var(--text-color);
         }
 
         .card-label {
             font-size: 14px;
-            color: #666;
+            color: var(--secondtx-color);
         }
+
+        /* switch */
+        #switch {
+        position: absolute;
+        width: 4rem;
+        margin-left: 1450px;
+        margin-bottom: 600px;
+        }
+
+        #switch button {
+        position: absolute;
+        z-index: 1;
+        transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        cursor: pointer;
+        
+        width: 2.5rem;
+        height: 2.5rem;
+        background: white;
+        border: 0;
+        border-radius: 50%;
+        background-image: var(--switch-bg-url);
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: all 0.3s;
+        
+        animation: slide-back 0.4s;
+        border: 1px var(--highlight-color) solid;
+        }
+
+        #switch button:hover {
+        outline: 0.5rem solid var(--highlight-color);
+        }
+
+        .dark #switch button {
+        animation: slide-in 0.4s forwards;
+        }
+
+        #switch span {
+        display: block;
+        width: 4rem;
+        height: 1.7rem;
+        background: var(--surface-color);
+        border: 1px solid var(--stroke-color);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border-radius: 624.94rem;
+        }
+
     </style>
 </head>
 <body>
+
+    <div id="switch" onclick="toggleMode()">
+        <button></button>
+        <span></span>
+    </div>
 
     <div class="dashboard-container">
         <h1>Dashboard Analítico</h1>
@@ -79,3 +170,23 @@
 
 </body>
 </html>
+<script>
+
+function toggleMode(){
+    const html = document.documentElement;
+    html.classList.toggle('dark');
+
+
+    // Salva o tema escolhido no "Armazenamento Local (LocalStorage)"
+    const mode = html.classList.contains('dark') ? 'dark' : 'light';
+    localStorage.setItem('theme', mode);
+
+    // Alterar aparência do título
+    updateTextColor();
+}
+function updateTextColor(){
+    currentColor = document.documentElement.classList.contains('dark') ? '#fff' : 'black';
+    titleElement.style.color = currentColor;
+}
+
+</script>
